@@ -19,6 +19,7 @@ sample1[gain == 1 & pre.follow == 1, state := "pre-follow (gain)"
     ][gain == 0 & pre.follow == 1, state := "pre-follow (loss)"
     ][gain == 1 & post.follow == 1, state := "post-follow (gain)"
     ][gain == 0 & post.follow == 1, state := "post-follow (loss)"]
+    
 gg.main <- survfit(Surv(hold.period, sale) ~ state, sample1 = sample1[hold.period < 200 & (pre.follow == 1 | (post.follow == 1 & date - as.Date(follow.date) <= pre.period))])
 
 d.main <- ggsurv(gg.main,
